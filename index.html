@@ -10,17 +10,32 @@
       margin: 20px;
       background-color: #fdfdfd;
     }
-    .search-box {
+    .search-container {
       text-align: center;
       margin-bottom: 30px;
     }
     #searchInput {
       padding: 10px;
-      width: 80%;
-      max-width: 400px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
+      width: 300px;
       font-size: 16px;
+    }
+    .suggestions {
+      position: absolute;
+      background-color: white;
+      border: 1px solid #ccc;
+      width: 300px;
+      margin-left: auto;
+      margin-right: auto;
+      left: 0;
+      right: 0;
+      z-index: 10;
+    }
+    .suggestion-item {
+      padding: 8px;
+      cursor: pointer;
+    }
+    .suggestion-item:hover {
+      background-color: #f0f0f0;
     }
     .page {
       text-align: center;
@@ -50,14 +65,13 @@
 <body>
   <h1 style="text-align:center;">Saairaa Organics Price Catalog Online</h1>
 
-  <!-- Search box -->
-  <div class="search-box">
-    <input type="text" id="searchInput" placeholder="Search product or page number..." onkeydown="if(event.key==='Enter') searchCatalog()" />
+  <div class="search-container">
+    <input type="text" id="searchInput" placeholder="Search product..."/>
+    <div id="suggestions" class="suggestions"></div>
   </div>
 
   <script>
-    // Product mapping
-    const productMap = {
+    const catalogMap = {
       "henna powder": 3,
       "indigo powder": 4,
       "hair henna paste": 5,
@@ -75,10 +89,11 @@
       "hair henna powder": 4
     };
 
-    // Create and display pages
     const container = document.body;
-    const pageRefs = [];
+    const searchInput = document.getElementById("searchInput");
+    const suggestionsBox = document.getElementById("suggestions");
 
+    // Generate catalog pages
     for (let i = 1; i <= 63; i++) {
       const page = document.createElement("div");
       page.className = "page";
@@ -97,45 +112,54 @@
       link.href = `https://wa.me/?text=Check this product page: Page ${i} - https://saairaaenterprises.github.io/saairaa-catalog/downloads/${i}.jpg`;
       link.className = "whatsapp-btn";
       link.target = "_blank";
-      link.innerHTML = "↑ Share above on WhatsApp";
+      link.innerText = "Share above on WhatsApp";
 
       buttonWrapper.appendChild(link);
       page.appendChild(img);
       page.appendChild(buttonWrapper);
       container.appendChild(page);
-
-      pageRefs[i] = page;
     }
 
-    // Search logic
-    function searchCatalog() {
-      const input = document.getElementById("searchInput").value.trim().toLowerCase();
+    // Show suggestions
+    searchInput.addEventListener("input", () => {
+      const value = searchInput.value.trim().toLowerCase();
+      suggestionsBox.innerHTML = "";
+      if (!value) return;
 
-      if (!input) return;
-
-      // Check if it's a valid number and scroll to that page
-      const pageNum = parseInt(input);
-      if (!isNaN(pageNum) && pageNum >= 1 && pageNum <= 63) {
-        scrollToPage(pageNum);
-        return;
-      }
-
-      // Try matching from the beginning of product names
-      const matched = Object.entries(productMap).find(([key]) =>
-        key.startsWith(input)
+      const matches = Object.keys(catalogMap).filter(name =>
+        name.startsWith(value)
       );
 
-      if (matched) {
-        scrollToPage(matched[1]);
-      } else {
-        alert("No matching product found.");
-      }
-    }
+      matches.forEach(name => {
+        const item = document.createElement("div");
+        item.className = "suggestion-item";
+        item.innerText = name;
+        item.addEventListener("click", () => {
+          searchInput.value = name;
+          suggestionsBox.innerHTML = "";
+          scrollToPage(catalogMap[name]);
+        });
+        suggestionsBox.appendChild(item);
+      });
+    });
 
-    function scrollToPage(pageNumber) {
-      const el = document.getElementById(`page-${pageNumber}`);
-      if (el) {
-        el.scrollIntoView({ behavior: "smooth" });
+    // Scroll to matching page
+    searchInput.addEventListener("keypress", (e) => {
+      if (e.key === "Enter") {
+        const value = searchInput.value.trim().toLowerCase();
+        const match = Object.keys(catalogMap).find(name =>
+          name.startsWith(value)
+        );
+        if (match) {
+          scrollToPage(catalogMap[match]);
+        }
+      }
+    });
+
+    function scrollToPage(pageNum) {
+      const element = document.getElementById(`page-${pageNum}`);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
       }
     }
   </script>
