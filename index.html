@@ -3,75 +3,99 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Saairaa Organics Catalog</title>
+  <title>Product Search</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      margin: 20px;
-      background-color: #fdfdfd;
+      padding: 20px;
+      background: #f4f4f4;
     }
-    .search-container {
-      text-align: center;
-      margin-bottom: 30px;
-    }
+
     #searchInput {
+      width: 100%;
+      max-width: 400px;
       padding: 10px;
-      width: 300px;
       font-size: 16px;
-    }
-    .suggestions {
-      position: absolute;
-      background-color: white;
-      border: 1px solid #ccc;
-      width: 300px;
+      margin-bottom: 10px;
+      display: block;
       margin-left: auto;
       margin-right: auto;
-      left: 0;
-      right: 0;
-      z-index: 10;
     }
-    .suggestion-item {
-      padding: 8px;
+
+    #suggestions {
+      max-width: 400px;
+      margin: auto;
+      list-style: none;
+      padding: 0;
+      margin-top: -10px;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-top: none;
+      z-index: 1000;
+      position: relative;
+    }
+
+    #suggestions li {
+      padding: 10px;
+      border-top: 1px solid #ccc;
       cursor: pointer;
     }
-    .suggestion-item:hover {
+
+    #suggestions li:hover {
       background-color: #f0f0f0;
     }
-    .page {
-      text-align: center;
-      margin-bottom: 40px;
-    }
-    .catalog-img {
+
+    .product-image {
       width: 100%;
-      max-width: 800px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
+      max-width: 600px;
+      display: block;
+      margin: 30px auto;
+      border-radius: 6px;
     }
-    .whatsapp-btn {
-      display: inline-block;
-      margin-top: 15px;
-      padding: 10px 20px;
-      background-color: #25D366;
-      color: white;
-      text-decoration: none;
-      border-radius: 5px;
-      font-weight: bold;
+
+    .highlight {
+      border: 4px solid #ff9800;
+      animation: flash 1s ease-in-out;
     }
-    .whatsapp-btn:hover {
-      background-color: #1ebe5d;
+
+    @keyframes flash {
+      0% { border-color: #ff9800; }
+      50% { border-color: #fff176; }
+      100% { border-color: #ff9800; }
     }
   </style>
 </head>
 <body>
-  <h1 style="text-align:center;">Saairaa Organics Price Catalog Online</h1>
 
-  <div class="search-container">
-    <input type="text" id="searchInput" placeholder="Search product..."/>
-    <div id="suggestions" class="suggestions"></div>
-  </div>
+  <h2 style="text-align: center;">Search for a Product</h2>
+  <input
+    type="text"
+    id="searchInput"
+    placeholder="Search for a product..."
+    autocomplete="off"
+  />
+  <ul id="suggestions"></ul>
+
+  <!-- Product Images -->
+  <img src="downloads/1.jpg" alt="Page 1" class="product-image">
+  <img src="downloads/2.jpg" alt="Page 2" class="product-image">
+  <img src="downloads/3.jpg" alt="Page 3" class="product-image">
+  <img src="downloads/4.jpg" alt="Page 4" class="product-image">
+  <img src="downloads/5.jpg" alt="Page 5" class="product-image">
+  <img src="downloads/6.jpg" alt="Page 6" class="product-image">
+  <img src="downloads/7.jpg" alt="Page 7" class="product-image">
+  <img src="downloads/8.jpg" alt="Page 8" class="product-image">
+  <img src="downloads/9.jpg" alt="Page 9" class="product-image">
+  <img src="downloads/10.jpg" alt="Page 10" class="product-image">
+  <img src="downloads/11.jpg" alt="Page 11" class="product-image">
+  <img src="downloads/12.jpg" alt="Page 12" class="product-image">
+  <img src="downloads/13.jpg" alt="Page 13" class="product-image">
+  <img src="downloads/14.jpg" alt="Page 14" class="product-image">
+  <img src="downloads/15.jpg" alt="Page 15" class="product-image">
+  <img src="downloads/16.jpg" alt="Page 16" class="product-image">
 
   <script>
-    const catalogMap = {
+    const productMap = {
       "henna powder": 3,
       "indigo powder": 4,
       "hair henna paste": 5,
@@ -89,79 +113,53 @@
       "hair henna powder": 4
     };
 
-    const container = document.body;
     const searchInput = document.getElementById("searchInput");
-    const suggestionsBox = document.getElementById("suggestions");
+    const suggestions = document.getElementById("suggestions");
 
-    // Generate catalog pages
-    for (let i = 1; i <= 63; i++) {
-      const page = document.createElement("div");
-      page.className = "page";
-      page.id = `page-${i}`;
+    searchInput.addEventListener("input", function () {
+      const input = this.value.toLowerCase().trim();
+      suggestions.innerHTML = "";
 
-      const img = document.createElement("img");
-      img.src = `downloads/${i}.jpg`;
-      img.alt = `Page ${i}`;
-      img.className = "catalog-img";
+      if (input.length < 3) return;
 
-      const buttonWrapper = document.createElement("div");
-      buttonWrapper.style.textAlign = "center";
-      buttonWrapper.style.marginTop = "10px";
-
-      const link = document.createElement("a");
-      link.href = `https://wa.me/?text=Check this product page: Page ${i} - https://saairaaenterprises.github.io/saairaa-catalog/downloads/${i}.jpg`;
-      link.className = "whatsapp-btn";
-      link.target = "_blank";
-      link.innerText = "Share above on WhatsApp";
-
-      buttonWrapper.appendChild(link);
-      page.appendChild(img);
-      page.appendChild(buttonWrapper);
-      container.appendChild(page);
-    }
-
-    // Show suggestions
-    searchInput.addEventListener("input", () => {
-      const value = searchInput.value.trim().toLowerCase();
-      suggestionsBox.innerHTML = "";
-      if (!value) return;
-
-      const matches = Object.keys(catalogMap).filter(name =>
-        name.startsWith(value)
+      const matches = Object.keys(productMap).filter(product =>
+        product.includes(input)
       );
 
-      matches.forEach(name => {
-        const item = document.createElement("div");
-        item.className = "suggestion-item";
-        item.innerText = name;
-        item.addEventListener("click", () => {
-          searchInput.value = name;
-          suggestionsBox.innerHTML = "";
-          scrollToPage(catalogMap[name]);
+      matches.forEach(match => {
+        const li = document.createElement("li");
+        li.textContent = match;
+        li.addEventListener("click", () => {
+          searchInput.value = match;
+          suggestions.innerHTML = "";
+          scrollToPage(productMap[match]);
         });
-        suggestionsBox.appendChild(item);
+        suggestions.appendChild(li);
       });
     });
 
-    // Scroll to matching page
-    searchInput.addEventListener("keypress", (e) => {
+    searchInput.addEventListener("keydown", function (e) {
       if (e.key === "Enter") {
-        const value = searchInput.value.trim().toLowerCase();
-        const match = Object.keys(catalogMap).find(name =>
-          name.startsWith(value)
+        const val = this.value.toLowerCase().trim();
+        const match = Object.keys(productMap).find(product =>
+          product.includes(val)
         );
         if (match) {
-          scrollToPage(catalogMap[match]);
+          suggestions.innerHTML = "";
+          scrollToPage(productMap[match]);
         }
       }
     });
 
-    function scrollToPage(pageNum) {
-      const element = document.getElementById(`page-${pageNum}`);
-      if (element) {
-        element.scrollIntoView({ behavior: "smooth" });
+    function scrollToPage(pageNumber) {
+      const img = document.querySelector(`img[src="downloads/${pageNumber}.jpg"]`);
+      if (img) {
+        document.querySelectorAll(".product-image").forEach(i => i.classList.remove("highlight"));
+        img.classList.add("highlight");
+        img.scrollIntoView({ behavior: "smooth", block: "start" });
       }
     }
   </script>
+
 </body>
 </html>
