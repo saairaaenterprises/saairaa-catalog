@@ -2,13 +2,25 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Saairaa Organics Catalog</title>
   <style>
     body {
       font-family: Arial, sans-serif;
       margin: 20px;
       background-color: #fdfdfd;
+    }
+    .search-box {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    #searchInput {
+      padding: 10px;
+      width: 80%;
+      max-width: 400px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 16px;
     }
     .page {
       text-align: center;
@@ -37,33 +49,95 @@
 </head>
 <body>
   <h1 style="text-align:center;">Saairaa Organics Price Catalog Online</h1>
+
+  <!-- Search box -->
+  <div class="search-box">
+    <input type="text" id="searchInput" placeholder="Search product or page number..." onkeydown="if(event.key==='Enter') searchCatalog()" />
+  </div>
+
   <script>
+    // Product mapping
+    const productMap = {
+      "henna powder": 3,
+      "indigo powder": 4,
+      "hair henna paste": 5,
+      "eucalyptus oil": 6,
+      "lavender oil": 7,
+      "tea tree oil": 8,
+      "bridal blend oil": 9,
+      "beginners kit": 10,
+      "bridal mehendi kit": 11,
+      "bridal mehendi cones": 12,
+      "nail cones": 13,
+      "sealant spray": 14,
+      "practice cone": 15,
+      "aftercare balm": 16,
+      "hair henna powder": 4
+    };
+
+    // Create and display pages
     const container = document.body;
+    const pageRefs = [];
 
-  for (let i = 1; i <= 63; i++) {
-    const page = document.createElement("div");
-    page.className = "page";
+    for (let i = 1; i <= 63; i++) {
+      const page = document.createElement("div");
+      page.className = "page";
+      page.id = `page-${i}`;
 
-    const img = document.createElement("img");
-    img.src = `downloads/${i}.jpg`;
-    img.alt = `Page ${i}`;
-    img.className = "catalog-img";
+      const img = document.createElement("img");
+      img.src = `downloads/${i}.jpg`;
+      img.alt = `Page ${i}`;
+      img.className = "catalog-img";
 
-    const buttonWrapper = document.createElement("div");
-    buttonWrapper.style.textAlign = "center";
-    buttonWrapper.style.marginTop = "10px";
+      const buttonWrapper = document.createElement("div");
+      buttonWrapper.style.textAlign = "center";
+      buttonWrapper.style.marginTop = "10px";
 
-    const link = document.createElement("a");
-    link.href = `https://wa.me/?text=Check this product page: Page ${i} - https://saairaaenterprises.github.io/saairaa-catalog/downloads/${i}.jpg`;
-    link.className = "whatsapp-btn";
-    link.target = "_blank";
-    link.innerText = "Share above on WhatsApp";
+      const link = document.createElement("a");
+      link.href = `https://wa.me/?text=Check this product page: Page ${i} - https://saairaaenterprises.github.io/saairaa-catalog/downloads/${i}.jpg`;
+      link.className = "whatsapp-btn";
+      link.target = "_blank";
+      link.innerHTML = "↑ Share above on WhatsApp";
 
-    buttonWrapper.appendChild(link);
-    page.appendChild(img);
-    page.appendChild(buttonWrapper);
-    container.appendChild(page);
-  }
-</script>
+      buttonWrapper.appendChild(link);
+      page.appendChild(img);
+      page.appendChild(buttonWrapper);
+      container.appendChild(page);
+
+      pageRefs[i] = page;
+    }
+
+    // Search logic
+    function searchCatalog() {
+      const input = document.getElementById("searchInput").value.trim().toLowerCase();
+
+      if (!input) return;
+
+      // Check if it's a valid number and scroll to that page
+      const pageNum = parseInt(input);
+      if (!isNaN(pageNum) && pageNum >= 1 && pageNum <= 63) {
+        scrollToPage(pageNum);
+        return;
+      }
+
+      // Try matching from the beginning of product names
+      const matched = Object.entries(productMap).find(([key]) =>
+        key.startsWith(input)
+      );
+
+      if (matched) {
+        scrollToPage(matched[1]);
+      } else {
+        alert("No matching product found.");
+      }
+    }
+
+    function scrollToPage(pageNumber) {
+      const el = document.getElementById(`page-${pageNumber}`);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  </script>
 </body>
 </html>
