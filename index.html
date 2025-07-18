@@ -36,28 +36,34 @@
   </style>
 </head>
 <body>
-  <h1 style="text-align:center;">📒 Saairaa Organics Price Catalog</h1>
+  <h1 style="text-align:center;">Saairaa Organics Price Catalog Online</h1>
   <script>
     const container = document.body;
-    for (let i = 1; i <= 63; i++) {
-      const page = document.createElement("div");
-      page.className = "page";
 
-      const img = document.createElement("img");
-      img.src = `downloads/${i}.png`;
-      img.alt = `Page ${i}`;
-      img.className = "catalog-img";
+  for (let i = 1; i <= 63; i++) {
+    const page = document.createElement("div");
+    page.className = "page";
 
-      const link = document.createElement("a");
-      link.href = `https://wa.me/?text=Check this product page: Page ${i} - https://saairaaenterprises.github.io/saairaa-catalog/downloads/${i}.png`;
-      link.className = "whatsapp-btn";
-      link.target = "_blank";
-      link.innerText = "Share on WhatsApp";
+    const img = document.createElement("img");
+    img.src = `downloads/${i}.png`;
+    img.alt = `Page ${i}`;
+    img.className = "catalog-img";
 
-      page.appendChild(img);
-      page.appendChild(link);
-      container.appendChild(page);
-    }
-  </script>
+    const buttonWrapper = document.createElement("div");
+    buttonWrapper.style.textAlign = "center";
+    buttonWrapper.style.marginTop = "10px";
+
+    const link = document.createElement("a");
+    link.href = `https://wa.me/?text=Check this product page: Page ${i} - https://saairaaenterprises.github.io/saairaa-catalog/downloads/${i}.png`;
+    link.className = "whatsapp-btn";
+    link.target = "_blank";
+    link.innerText = "Share on WhatsApp";
+
+    buttonWrapper.appendChild(link);
+    page.appendChild(img);
+    page.appendChild(buttonWrapper);
+    container.appendChild(page);
+  }
+</script>
 </body>
 </html>
