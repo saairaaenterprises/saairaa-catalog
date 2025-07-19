@@ -336,7 +336,7 @@
     });
 
     function scrollToPage(pageNumber) {
-      const img = document.querySelector(img[src="downloads/${pageNumber}.jpg"]);
+      const img = document.querySelector(`img[src="downloads/${pageNumber}.jpg"]`);
       if (img) {
         document.querySelectorAll(".product-image").forEach(i => i.classList.remove("highlight"));
         img.classList.add("highlight");
