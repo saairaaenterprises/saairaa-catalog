@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="="en">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -121,71 +121,10 @@
   <ul id="suggestions"></ul>
 
   <!-- Product Images -->
-  <!-- Example: Add your full set up to 63 images below -->
-  <img src="downloads/1.jpg" alt="Page 1" class="product-image">
-  <img src="downloads/2.jpg" alt="Page 2" class="product-image">
-  <img src="downloads/3.jpg" alt="Page 3" class="product-image">
-  <img src="downloads/4.jpg" alt="Page 4" class="product-image">
-  <img src="downloads/5.jpg" alt="Page 5" class="product-image">
-  <img src="downloads/6.jpg" alt="Page 6" class="product-image">
-  <img src="downloads/7.jpg" alt="Page 7" class="product-image">
-  <img src="downloads/8.jpg" alt="Page 8" class="product-image">
-  <img src="downloads/9.jpg" alt="Page 9" class="product-image">
-  <img src="downloads/10.jpg" alt="Page 10" class="product-image">
-  <img src="downloads/11.jpg" alt="Page 11" class="product-image">
-  <img src="downloads/12.jpg" alt="Page 12" class="product-image">
-  <img src="downloads/13.jpg" alt="Page 13" class="product-image">
-  <img src="downloads/14.jpg" alt="Page 14" class="product-image">
-  <img src="downloads/15.jpg" alt="Page 15" class="product-image">
-  <img src="downloads/16.jpg" alt="Page 16" class="product-image">
-  <img src="downloads/17.jpg" alt="Page 17" class="product-image">
-<img src="downloads/18.jpg" alt="Page 18" class="product-image">
-<img src="downloads/19.jpg" alt="Page 19" class="product-image">
-<img src="downloads/20.jpg" alt="Page 20" class="product-image">
-<img src="downloads/21.jpg" alt="Page 21" class="product-image">
-<img src="downloads/22.jpg" alt="Page 22" class="product-image">
-<img src="downloads/23.jpg" alt="Page 23" class="product-image">
-<img src="downloads/24.jpg" alt="Page 24" class="product-image">
-<img src="downloads/25.jpg" alt="Page 25" class="product-image">
-<img src="downloads/26.jpg" alt="Page 26" class="product-image">
-<img src="downloads/27.jpg" alt="Page 27" class="product-image">
-<img src="downloads/28.jpg" alt="Page 28" class="product-image">
-<img src="downloads/29.jpg" alt="Page 29" class="product-image">
-<img src="downloads/30.jpg" alt="Page 30" class="product-image">
-<img src="downloads/31.jpg" alt="Page 31" class="product-image">
-<img src="downloads/32.jpg" alt="Page 32" class="product-image">
-<img src="downloads/33.jpg" alt="Page 33" class="product-image">
-<img src="downloads/34.jpg" alt="Page 34" class="product-image">
-<img src="downloads/35.jpg" alt="Page 35" class="product-image">
-<img src="downloads/36.jpg" alt="Page 36" class="product-image">
-<img src="downloads/37.jpg" alt="Page 37" class="product-image">
-<img src="downloads/38.jpg" alt="Page 38" class="product-image">
-<img src="downloads/39.jpg" alt="Page 39" class="product-image">
-<img src="downloads/40.jpg" alt="Page 40" class="product-image">
-<img src="downloads/41.jpg" alt="Page 41" class="product-image">
-<img src="downloads/42.jpg" alt="Page 42" class="product-image">
-<img src="downloads/43.jpg" alt="Page 43" class="product-image">
-<img src="downloads/44.jpg" alt="Page 44" class="product-image">
-<img src="downloads/45.jpg" alt="Page 45" class="product-image">
-<img src="downloads/46.jpg" alt="Page 46" class="product-image">
-<img src="downloads/47.jpg" alt="Page 47" class="product-image">
-<img src="downloads/48.jpg" alt="Page 48" class="product-image">
-<img src="downloads/49.jpg" alt="Page 49" class="product-image">
-<img src="downloads/50.jpg" alt="Page 50" class="product-image">
-<img src="downloads/51.jpg" alt="Page 51" class="product-image">
-<img src="downloads/52.jpg" alt="Page 52" class="product-image">
-<img src="downloads/53.jpg" alt="Page 53" class="product-image">
-<img src="downloads/54.jpg" alt="Page 54" class="product-image">
-<img src="downloads/55.jpg" alt="Page 55" class="product-image">
-<img src="downloads/56.jpg" alt="Page 56" class="product-image">
-<img src="downloads/57.jpg" alt="Page 57" class="product-image">
-<img src="downloads/58.jpg" alt="Page 58" class="product-image">
-<img src="downloads/59.jpg" alt="Page 59" class="product-image">
-<img src="downloads/60.jpg" alt="Page 60" class="product-image">
-<img src="downloads/61.jpg" alt="Page 61" class="product-image">
-<img src="downloads/62.jpg" alt="Page 62" class="product-image">
-<img src="downloads/63.jpg" alt="Page 63" class="product-image">
-
+  <div id="image-container">
+    <!-- All 63 images -->
+    ${[...Array(63)].map((_, i) => `<img src="downloads/${i + 1}.jpg" alt="Page ${i + 1}" class="product-image">`).join('\n')}
+  </div>
 
   <!-- Back to Top Button -->
   <button id="backToTopBtn" title="Go to top">↑</button>
@@ -296,10 +235,10 @@
       clearBtn.style.display = input ? "block" : "none";
       suggestions.innerHTML = "";
 
-      if (input.length < 3) return;
+      if (input.length < 2) return;
 
       const matches = Object.keys(productMap).filter(product =>
-        product.includes(input)
+        product.toLowerCase().includes(input)
       );
 
       matches.forEach(match => {
@@ -319,7 +258,7 @@
       if (e.key === "Enter") {
         const val = this.value.toLowerCase().trim();
         const match = Object.keys(productMap).find(product =>
-          product.includes(val)
+          product.toLowerCase().includes(val)
         );
         if (match) {
           suggestions.innerHTML = "";
