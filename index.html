@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -11,16 +11,34 @@
       background: #f4f4f4;
     }
 
-    #searchInput {
+    .search-container {
+      position: relative;
       width: 90%;
       max-width: 400px;
-      padding: 10px;
+      margin: 0 auto 10px auto;
+    }
+
+    #searchInput {
+      width: 100%;
+      padding: 10px 40px 10px 10px;
       font-size: 16px;
-      margin-bottom: 10px;
+      box-sizing: border-box;
       display: block;
-      margin-left: auto;
-      margin-right: auto;
-	  box-sizing: border-box;
+    }
+
+    .clear-btn {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 20px;
+      cursor: pointer;
+      color: #888;
+      display: none;
+    }
+
+    .clear-btn:hover {
+      color: #000;
     }
 
     #suggestions {
@@ -64,20 +82,46 @@
       50% { border-color: #fff176; }
       100% { border-color: #ff9800; }
     }
+
+    #backToTopBtn {
+      display: none;
+      position: fixed;
+      bottom: 30px;
+      right: 20px;
+      z-index: 100;
+      font-size: 24px;
+      background-color: #ff9800;
+      color: white;
+      border: none;
+      outline: none;
+      padding: 10px 15px;
+      border-radius: 50%;
+      cursor: pointer;
+      box-shadow: 0px 2px 6px rgba(0,0,0,0.3);
+      transition: opacity 0.3s ease-in-out;
+    }
+
+    #backToTopBtn:hover {
+      background-color: #e68900;
+    }
   </style>
 </head>
 <body>
 
   <h2 style="text-align: center;">Search for a Product</h2>
-  <input
-    type="text"
-    id="searchInput"
-    placeholder="Search for a product..."
-    autocomplete="off"
-  />
+  <div class="search-container">
+    <input
+      type="text"
+      id="searchInput"
+      placeholder="Search for a product..."
+      autocomplete="off"
+    />
+    <span id="clearBtn" class="clear-btn">&times;</span>
+  </div>
   <ul id="suggestions"></ul>
 
   <!-- Product Images -->
+  <!-- Example: Add your full set up to 63 images below -->
   <img src="downloads/1.jpg" alt="Page 1" class="product-image">
   <img src="downloads/2.jpg" alt="Page 2" class="product-image">
   <img src="downloads/3.jpg" alt="Page 3" class="product-image">
@@ -143,107 +187,113 @@
 <img src="downloads/63.jpg" alt="Page 63" class="product-image">
 
 
+  <!-- Back to Top Button -->
+  <button id="backToTopBtn" title="Go to top">↑</button>
+
   <script>
     const productMap = {
-  "henna powder": 3,
-  "triple sifted henna powder": 3,
-  "5 filter henna powder": 3,
-  "indigo powder": 4,
-  "hair henna powder": 4,
-  "hair henna paste": 5,
-  "eucalyptus oil": 6,
-  "normal stain oil": 6,
-  "lavender oil": 7,
-  "rich babyshower oil": 7,
-  "tea tree oil": 8,
-  "rich stain oil": 8,
-  "bridal blend oil": 9,
-  "mehendi oil": 9,
-  "bridal use oil": 9,
-  "dark stain oil": 9,
-  "beginners kit": 10,
-  "practice use kit": 10,
-  "bridal mehendi kit": 11,
-  "bridal use kit": 11,
-  "bridal mehendi cones": 12,
-  "bridal cones combo": 12,
-  "nail cones": 13,
-  "nail liquid": 13,
-  "sealant spray": 14,
-  "practice cone": 15,
-  "aftercare balm": 16,
-  "henna aftercare roll on": 17,
-  "beexwax": 18,
-  "sheabutter": 19,
-  "olive oil": 20,
-  "almond oil": 21,
-  "frozen cellophane full sheet": 22,
-  "metallic cellophane full sheet": 22,
-  "sliver lining cellophane full sheet": 22,
-  "transparent cellopahne full sheet": 22,
-  "frozen pre cut cellophane sheet": 23,
-  "silver lining cellophane pre cut sheet": 25,
-  "frozern pre rolled cellophane sheet": 24,
-  "transparent pre rolled cellophane sheet": 24,
-  "henna cone pins": 26,
-  "0.38mm henna cone pins": 26,
-  "0.5mm henna cone pins": 26,
-  "0.6mm henna cone pins": 26,
-  "0.7mm henna cone pins": 26,
-  "balm colour pigments": 27,
-  "shimmer balm colour pigments": 27,
-  "empty balm container": 28,
-  "mehendi pillow": 29,
-  "mehendi cone stand acrylic 25 holes": 30,
-  "mehendi cone stand acrylic 36 holes": 30,
-  "mehendi practice full hand acrylic": 31,
-  "mehendi practice half hand acrylic": 31,
-  "mehendi practice leg acrylic": 31,
-  "piping bag": 32,
-  "cellotape": 33,
-  "weight scale": 34,
-  "measuring cup": 35,
-  "empty roll-on bottle": 36,
-  "empty amber bottle": 37,
-  "bowl": 38,
-  "bowl with lid": 39,
-  "spatula": 40,
-  "stockings socks": 41,
-  "empty spray bottle": 42,
-  "stencils sticker": 43,
-  "empty pin box": 44,
-  "clip set sealing clip": 45,
-  "sugar": 45,
-  "empty dip container": 46,
-  "dip henna": 46,
-  "mefix tape": 47,
-  "fixation tape": 47,
-  "practice book with butter sheet": 48,
-  "hand blender mixing machine": 49,
-  "hair colour brush": 50,
-  "stool foldable": 51,
-  "tape dispenser": 52,
-  "cling wrap": 54,
-  "cone seal cover": 55,
-  "zip lock pouch": 56,
-  "standing pouch": 56,
-  "courier cover polybag": 57,
-  "packing stretch wrap": 58,
-  "cutter": 59,
-  "knife": 59,
-  "sissor": 60,
-  "aluminium bottle": 61,
-  "essential oil storage bottle": 61,
-  "packing tape brown": 62,
-  "packing box": 63,
-  "mehendi combo": 12
-};
+      "henna powder": 3,
+      "triple sifted henna powder": 3,
+      "5 filter henna powder": 3,
+      "indigo powder": 4,
+      "hair henna powder": 4,
+      "hair henna paste": 5,
+      "eucalyptus oil": 6,
+      "normal stain oil": 6,
+      "lavender oil": 7,
+      "rich babyshower oil": 7,
+      "tea tree oil": 8,
+      "rich stain oil": 8,
+      "bridal blend oil": 9,
+      "mehendi oil": 9,
+      "bridal use oil": 9,
+      "dark stain oil": 9,
+      "beginners kit": 10,
+      "practice use kit": 10,
+      "bridal mehendi kit": 11,
+      "bridal use kit": 11,
+      "bridal mehendi cones": 12,
+      "bridal cones combo": 12,
+      "nail cones": 13,
+      "nail liquid": 13,
+      "sealant spray": 14,
+      "practice cone": 15,
+      "aftercare balm": 16,
+      "henna aftercare roll on": 17,
+      "beexwax": 18,
+      "sheabutter": 19,
+      "olive oil": 20,
+      "almond oil": 21,
+      "frozen cellophane full sheet": 22,
+      "metallic cellophane full sheet": 22,
+      "sliver lining cellophane full sheet": 22,
+      "transparent cellopahne full sheet": 22,
+      "frozen pre cut cellophane sheet": 23,
+      "silver lining cellophane pre cut sheet": 25,
+      "frozern pre rolled cellophane sheet": 24,
+      "transparent pre rolled cellophane sheet": 24,
+      "henna cone pins": 26,
+      "0.38mm henna cone pins": 26,
+      "0.5mm henna cone pins": 26,
+      "0.6mm henna cone pins": 26,
+      "0.7mm henna cone pins": 26,
+      "balm colour pigments": 27,
+      "shimmer balm colour pigments": 27,
+      "empty balm container": 28,
+      "mehendi pillow": 29,
+      "mehendi cone stand acrylic 25 holes": 30,
+      "mehendi cone stand acrylic 36 holes": 30,
+      "mehendi practice full hand acrylic": 31,
+      "mehendi practice half hand acrylic": 31,
+      "mehendi practice leg acrylic": 31,
+      "piping bag": 32,
+      "cellotape": 33,
+      "weight scale": 34,
+      "measuring cup": 35,
+      "empty roll-on bottle": 36,
+      "empty amber bottle": 37,
+      "bowl": 38,
+      "bowl with lid": 39,
+      "spatula": 40,
+      "stockings socks": 41,
+      "empty spray bottle": 42,
+      "stencils sticker": 43,
+      "empty pin box": 44,
+      "clip set sealing clip": 45,
+      "sugar": 45,
+      "empty dip container": 46,
+      "dip henna": 46,
+      "mefix tape": 47,
+      "fixation tape": 47,
+      "practice book with butter sheet": 48,
+      "hand blender mixing machine": 49,
+      "hair colour brush": 50,
+      "stool foldable": 51,
+      "tape dispenser": 52,
+      "cling wrap": 54,
+      "cone seal cover": 55,
+      "zip lock pouch": 56,
+      "standing pouch": 56,
+      "courier cover polybag": 57,
+      "packing stretch wrap": 58,
+      "cutter": 59,
+      "knife": 59,
+      "sissor": 60,
+      "aluminium bottle": 61,
+      "essential oil storage bottle": 61,
+      "packing tape brown": 62,
+      "packing box": 63,
+      "mehendi combo": 12
+    };
 
     const searchInput = document.getElementById("searchInput");
     const suggestions = document.getElementById("suggestions");
+    const clearBtn = document.getElementById("clearBtn");
+    const backToTopBtn = document.getElementById("backToTopBtn");
 
     searchInput.addEventListener("input", function () {
       const input = this.value.toLowerCase().trim();
+      clearBtn.style.display = input ? "block" : "none";
       suggestions.innerHTML = "";
 
       if (input.length < 3) return;
@@ -257,6 +307,7 @@
         li.textContent = match;
         li.addEventListener("click", () => {
           searchInput.value = match;
+          clearBtn.style.display = "block";
           suggestions.innerHTML = "";
           scrollToPage(productMap[match]);
         });
@@ -277,6 +328,13 @@
       }
     });
 
+    clearBtn.addEventListener("click", function () {
+      searchInput.value = "";
+      suggestions.innerHTML = "";
+      clearBtn.style.display = "none";
+      searchInput.focus();
+    });
+
     function scrollToPage(pageNumber) {
       const img = document.querySelector(`img[src="downloads/${pageNumber}.jpg"]`);
       if (img) {
@@ -285,6 +343,18 @@
         img.scrollIntoView({ behavior: "smooth", block: "center" });
       }
     }
+
+    window.addEventListener("scroll", () => {
+      if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+        backToTopBtn.style.display = "block";
+      } else {
+        backToTopBtn.style.display = "none";
+      }
+    });
+
+    backToTopBtn.addEventListener("click", () => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
   </script>
 
 </body>
