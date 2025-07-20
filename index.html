@@ -341,13 +341,22 @@
     });
 
     function scrollToPage(pageNumber) {
-      const img = document.querySelector(`img[src="downloads/${pageNumber}.jpg"]`);
-      if (img) {
-        document.querySelectorAll(".product-image").forEach(i => i.classList.remove("highlight"));
-        img.classList.add("highlight");
-        img.scrollIntoView({ behavior: "smooth", block: "center" });
-      }
-    }
+  const img = document.querySelector(`img[src="downloads/${pageNumber}.jpg"]`);
+  if (img) {
+    document.querySelectorAll(".product-image").forEach(i => i.classList.remove("highlight"));
+    img.classList.add("highlight");
+
+    const headerOffset = 80; // Adjust if you have a sticky header
+    const elementTop = img.getBoundingClientRect().top + window.pageYOffset;
+    const offset = elementTop - (window.innerHeight / 2) + (img.offsetHeight / 2);
+
+    window.scrollTo({
+      top: offset,
+      behavior: "smooth"
+    });
+  }
+}
+
 
     window.addEventListener("scroll", () => {
       if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
