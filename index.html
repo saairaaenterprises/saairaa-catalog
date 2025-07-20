@@ -301,7 +301,7 @@
       clearBtn.style.display = input ? "block" : "none";
       suggestions.innerHTML = "";
 
-      if (input.length < 3) return;
+      if (input.length < 2) return;
 
       const matches = Object.keys(productMap).filter(product =>
         product.includes(input)
