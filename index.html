@@ -1,386 +1,347 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Product Search</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      padding: 20px;
-      background: #f4f4f4;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Product Search</title>
 
-    .search-container {
-      position: relative;
-      width: 90%;
-      max-width: 400px;
-      margin: 0 auto 10px auto;
-    }
+<style>
 
-    #searchInput {
-      width: 100%;
-      padding: 10px 40px 10px 10px;
-      font-size: 16px;
-      box-sizing: border-box;
-      display: block;
-    }
-
-    .clear-btn {
-      position: absolute;
-      right: 10px;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 20px;
-      cursor: pointer;
-      color: #888;
-      display: none;
-    }
-
-    .clear-btn:hover {
-      color: #000;
-    }
-
-    #suggestions {
-      max-width: 400px;
-      margin: auto;
-      list-style: none;
-      padding: 0;
-      margin-top: -10px;
-      background: #fff;
-      border: 1px solid #ccc;
-      border-top: none;
-      z-index: 1000;
-      position: relative;
-    }
-
-    #suggestions li {
-      padding: 10px;
-      border-top: 1px solid #ccc;
-      cursor: pointer;
-    }
-
-    #suggestions li:hover {
-      background-color: #f0f0f0;
-    }
-
-    .product-image {
-      width: 100%;
-      max-width: 600px;
-      display: block;
-      margin: 30px auto;
-      border-radius: 6px;
-    }
-
-    .highlight {
-      border: 4px solid #ff9800;
-      animation: flash 1s ease-in-out;
-    }
-
-    @keyframes flash {
-      0% { border-color: #ff9800; }
-      50% { border-color: #fff176; }
-      100% { border-color: #ff9800; }
-    }
-
-    #backToTopBtn {
-  display: none;
-  position: fixed;
-  bottom: 30px;
-  right: 20px;
-  z-index: 100;
-  width: 50px;
-  height: 50px;
-  font-size: 24px;
-  background-color: #ff9800;
-  color: white;
-  border: none;
-  outline: none;
-  border-radius: 50%;
-  cursor: pointer;
-  box-shadow: 0px 2px 6px rgba(0,0,0,0.3);
-  transition: opacity 0.3s ease-in-out;
-  text-align: center;
-  font-weight: bold;
-  line-height: 50px; /* aligns icon vertically */
+body{
+font-family: Arial, sans-serif;
+padding:20px;
+background:#f4f4f4;
 }
-    }
 
-    #backToTopBtn:hover {
-      background-color: #e68900;
-    }
-  </style>
+.search-container{
+position:relative;
+width:90%;
+max-width:400px;
+margin:0 auto 10px auto;
+}
+
+#searchInput{
+width:100%;
+padding:10px 40px 10px 10px;
+font-size:16px;
+box-sizing:border-box;
+display:block;
+}
+
+.clear-btn{
+position:absolute;
+right:10px;
+top:50%;
+transform:translateY(-50%);
+font-size:20px;
+cursor:pointer;
+color:#888;
+display:none;
+}
+
+.clear-btn:hover{
+color:#000;
+}
+
+#suggestions{
+max-width:400px;
+margin:auto;
+list-style:none;
+padding:0;
+margin-top:-10px;
+background:#fff;
+border:1px solid #ccc;
+border-top:none;
+z-index:1000;
+position:relative;
+}
+
+#suggestions li{
+padding:10px;
+border-top:1px solid #ccc;
+cursor:pointer;
+}
+
+#suggestions li:hover{
+background-color:#f0f0f0;
+}
+
+.product-image{
+width:100%;
+max-width:600px;
+display:block;
+margin:30px auto;
+border-radius:6px;
+}
+
+.highlight{
+border:4px solid #ff9800;
+animation:flash 1s ease-in-out;
+}
+
+@keyframes flash{
+0%{border-color:#ff9800;}
+50%{border-color:#fff176;}
+100%{border-color:#ff9800;}
+}
+
+#backToTopBtn{
+display:none;
+position:fixed;
+bottom:30px;
+right:20px;
+z-index:100;
+width:50px;
+height:50px;
+font-size:24px;
+background-color:#ff9800;
+color:white;
+border:none;
+border-radius:50%;
+cursor:pointer;
+box-shadow:0px 2px 6px rgba(0,0,0,0.3);
+text-align:center;
+font-weight:bold;
+line-height:50px;
+}
+
+#backToTopBtn:hover{
+background-color:#e68900;
+}
+
+</style>
 </head>
+
 <body>
 
-  <h2 style="text-align: center;">Saairaa Organics®</h2>
-<p style="text-align:center; margin-top: 20px;">
-  Visit our website: <a href="https://www.saairaaorganics.in" target="_blank">www.saairaaorganics.in</a><br>
-  <strong style="font-size: 1.2em; color: #2c3e50; display: inline-block; margin-top: 6px;">
-    Saairaa Organics Price Catalog Online
-  </strong>
+<h2 style="text-align:center;">Saairaa Organics®</h2>
+
+<p style="text-align:center;margin-top:20px;">
+Visit our website:
+<a href="https://www.saairaaorganics.in" target="_blank">
+www.saairaaorganics.in
+</a><br>
+
+<strong style="font-size:1.2em;color:#2c3e50;display:inline-block;margin-top:6px;">
+Saairaa Organics Price Catalog Online
+</strong>
 </p>
 
-  <div class="search-container">
-    <input
-      type="text"
-      id="searchInput"
-      placeholder="Search for a product..."
-      autocomplete="off"
-    />
-    <span id="clearBtn" class="clear-btn">&times;</span>
-  </div>
-  <ul id="suggestions"></ul>
+<p style="text-align:center;margin-top:15px;">
+<a href="offers.html" style="
+background:#ff9800;
+color:#fff;
+padding:10px 18px;
+border-radius:6px;
+text-decoration:none;
+font-weight:bold;
+">
+🌙 View Eid Sale Offers 🌙
+</a>
+</p>
 
-<img src="downloads/1.jpg" alt="Page 1" class="product-image">
-<img src="downloads/2.jpg" alt="Page 2" class="product-image">
-<img src="downloads/3.jpg" alt="Page 3" class="product-image">
-<img src="downloads/4.jpg" alt="Page 4" class="product-image">
-<img src="downloads/5.jpg" alt="Page 5" class="product-image">
-<img src="downloads/6.jpg" alt="Page 6" class="product-image">
-<img src="downloads/7.jpg" alt="Page 7" class="product-image">
-<img src="downloads/8.jpg" alt="Page 8" class="product-image">
-<img src="downloads/9.jpg" alt="Page 9" class="product-image">
-<img src="downloads/10.jpg" alt="Page 10" class="product-image">
-<img src="downloads/11.jpg" alt="Page 11" class="product-image">
-<img src="downloads/12.jpg" alt="Page 12" class="product-image">
-<img src="downloads/13.jpg" alt="Page 13" class="product-image">
-<img src="downloads/14.jpg" alt="Page 14" class="product-image">
-<img src="downloads/15.jpg" alt="Page 15" class="product-image">
-<img src="downloads/16.jpg" alt="Page 16" class="product-image">
-<img src="downloads/17.jpg" alt="Page 17" class="product-image">
-<img src="downloads/18.jpg" alt="Page 18" class="product-image">
-<img src="downloads/19.jpg" alt="Page 19" class="product-image">
-<img src="downloads/20.jpg" alt="Page 20" class="product-image">
-<img src="downloads/21.jpg" alt="Page 21" class="product-image">
-<img src="downloads/22.jpg" alt="Page 22" class="product-image">
-<img src="downloads/23.jpg" alt="Page 23" class="product-image">
-<img src="downloads/24.jpg" alt="Page 24" class="product-image">
-<img src="downloads/25.jpg" alt="Page 25" class="product-image">
-<img src="downloads/26.jpg" alt="Page 26" class="product-image">
-<img src="downloads/27.jpg" alt="Page 27" class="product-image">
-<img src="downloads/28.jpg" alt="Page 28" class="product-image">
-<img src="downloads/29.jpg" alt="Page 29" class="product-image">
-<img src="downloads/30.jpg" alt="Page 30" class="product-image">
-<img src="downloads/31.jpg" alt="Page 31" class="product-image">
-<img src="downloads/32.jpg" alt="Page 32" class="product-image">
-<img src="downloads/33.jpg" alt="Page 33" class="product-image">
-<img src="downloads/34.jpg" alt="Page 34" class="product-image">
-<img src="downloads/35.jpg" alt="Page 35" class="product-image">
-<img src="downloads/36.jpg" alt="Page 36" class="product-image">
-<img src="downloads/37.jpg" alt="Page 37" class="product-image">
-<img src="downloads/38.jpg" alt="Page 38" class="product-image">
-<img src="downloads/39.jpg" alt="Page 39" class="product-image">
-<img src="downloads/40.jpg" alt="Page 40" class="product-image">
-<img src="downloads/41.jpg" alt="Page 41" class="product-image">
-<img src="downloads/42.jpg" alt="Page 42" class="product-image">
-<img src="downloads/43.jpg" alt="Page 43" class="product-image">
-<img src="downloads/44.jpg" alt="Page 44" class="product-image">
-<img src="downloads/45.jpg" alt="Page 45" class="product-image">
-<img src="downloads/46.jpg" alt="Page 46" class="product-image">
-<img src="downloads/47.jpg" alt="Page 47" class="product-image">
-<img src="downloads/48.jpg" alt="Page 48" class="product-image">
-<img src="downloads/49.jpg" alt="Page 49" class="product-image">
-<img src="downloads/50.jpg" alt="Page 50" class="product-image">
-<img src="downloads/51.jpg" alt="Page 51" class="product-image">
-<img src="downloads/52.jpg" alt="Page 52" class="product-image">
-<img src="downloads/53.jpg" alt="Page 53" class="product-image">
-<img src="downloads/54.jpg" alt="Page 54" class="product-image">
-<img src="downloads/55.jpg" alt="Page 55" class="product-image">
-<img src="downloads/56.jpg" alt="Page 56" class="product-image">
-<img src="downloads/57.jpg" alt="Page 57" class="product-image">
-<img src="downloads/58.jpg" alt="Page 58" class="product-image">
-<img src="downloads/59.jpg" alt="Page 59" class="product-image">
-<img src="downloads/60.jpg" alt="Page 60" class="product-image">
-<img src="downloads/61.jpg" alt="Page 61" class="product-image">
-<img src="downloads/62.jpg" alt="Page 62" class="product-image">
-<img src="downloads/63.jpg" alt="Page 63" class="product-image">
+<div class="search-container">
+<input type="text" id="searchInput" placeholder="Search for a product..." autocomplete="off"/>
+<span id="clearBtn" class="clear-btn">&times;</span>
+</div>
 
-  <!-- Back to Top Button -->
-  <button id="backToTopBtn" title="Go to top">↑</button>
+<ul id="suggestions"></ul>
 
-  <script>
-    const productMap = {
-      "henna powder": 3,
-      "triple sifted henna powder": 3,
-      "Bridal henna powder": 3,
-      "3 filter henna powder": 3,
-      "5 filter henna powder": 3,
-      "indigo powder": 4,
-      "hair henna powder": 4,
-      "hair henna paste": 5,
-      "eucalyptus oil": 6,
-      "nilgiris oil": 6,
-      "Essential oil": 6,
-      "normal stain oil": 6,
-      "lavender oil": 7,
-      "rich babyshower oil": 7,
-      "tea tree oil": 8,
-      "rich stain oil": 8,
-      "bridal blend oil": 9,
-      "mehendi oil": 9,
-      "bridal use oil": 9,
-      "dark stain oil": 9,
-      "beginners kit": 10,
-      "practice use kit": 10,
-      "bridal mehendi kit": 11,
-      "bridal use kit": 11,
-      "bridal mehendi cones": 12,
-      "bridal cones combo": 12,
-      "nail cones": 13,
-      "nail liquid": 13,
-      "sealant spray": 14,
-      "practice cone": 15,
-      "aftercare balm": 16,
-      "henna aftercare roll on": 17,
-      "beexwax": 18,
-      "sheabutter": 19,
-      "olive oil": 20,
-      "almond oil": 21,
-      "frozen cellophane full sheet": 22,
-      "metallic cellophane full sheet": 22,
-      "silver lining cellophane full sheet": 22,
-      "transparent cellophane full sheet": 22,
-      "frozen pre cut cellophane sheet": 23,
-      "silver lining cellophane pre cut sheet": 25,
-      "frozen pre rolled cellophane sheet": 24,
-      "transparent pre rolled cellophane sheet": 24,
-      "henna cone pins": 26,
-      "0.38mm henna cone pins": 26,
-      "0.5mm henna cone pins": 26,
-      "0.6mm henna cone pins": 26,
-      "0.7mm henna cone pins": 26,
-      "balm colour pigments": 27,
-      "shimmer balm colour pigments": 27,
-      "empty balm container": 28,
-      "mehendi pillow": 29,
-      "mehendi cone stand acrylic 25 holes": 30,
-      "mehendi cone stand acrylic 36 holes": 30,
-      "mehendi practice full hand acrylic": 31,
-      "mehendi practice half hand acrylic": 31,
-      "mehendi practice leg acrylic": 31,
-      "piping bag": 32,
-      "cellotape": 33,
-      "weight scale": 34,
-      "measuring cup": 35,
-      "empty roll-on bottle": 36,
-      "empty amber bottle": 37,
-      "bowl": 38,
-      "bowl with lid": 39,
-      "spatula": 40,
-      "stockings socks": 41,
-      "empty spray bottle": 42,
-      "stencils sticker": 43,
-      "empty pin box": 44,
-      "clip set sealing clip": 45,
-      "sugar": 45,
-      "empty dip container": 46,
-      "dip henna": 46,
-      "mefix tape": 47,
-      "fixation tape": 47,
-      "practice book with butter sheet": 48,
-      "hand blender mixing machine": 49,
-      "hair colour brush": 50,
-      "stool foldable": 51,
-      "tape dispenser": 52,
-      "Big tape dispenser": 52,
-      "mini tape dispenser": 52,
-      "cling wrap": 54,
-      "cone seal cover": 55,
-      "cone packing cover": 55,
-      "zip lock pouch": 56,
-      "standing pouch": 56,
-      "courier cover polybag": 57,
-      "packing stretch wrap": 58,
-      "cutter": 59,
-      "knife": 59,
-      "sissor": 60,
-      "aluminium bottle": 61,
-      "essential oil storage bottle": 61,
-      "packing tape brown": 62,
-      "packing box": 63,
-      "mehendi combo": 12
-    };
+<img src="downloads/1.jpg" class="product-image">
+<img src="downloads/2.jpg" class="product-image">
+<img src="downloads/3.jpg" class="product-image">
+<img src="downloads/4.jpg" class="product-image">
+<img src="downloads/5.jpg" class="product-image">
+<img src="downloads/6.jpg" class="product-image">
+<img src="downloads/7.jpg" class="product-image">
+<img src="downloads/8.jpg" class="product-image">
+<img src="downloads/9.jpg" class="product-image">
+<img src="downloads/10.jpg" class="product-image">
+<img src="downloads/11.jpg" class="product-image">
+<img src="downloads/12.jpg" class="product-image">
+<img src="downloads/13.jpg" class="product-image">
+<img src="downloads/14.jpg" class="product-image">
+<img src="downloads/15.jpg" class="product-image">
+<img src="downloads/16.jpg" class="product-image">
+<img src="downloads/17.jpg" class="product-image">
+<img src="downloads/18.jpg" class="product-image">
+<img src="downloads/19.jpg" class="product-image">
+<img src="downloads/20.jpg" class="product-image">
+<img src="downloads/21.jpg" class="product-image">
+<img src="downloads/22.jpg" class="product-image">
+<img src="downloads/23.jpg" class="product-image">
+<img src="downloads/24.jpg" class="product-image">
+<img src="downloads/25.jpg" class="product-image">
+<img src="downloads/26.jpg" class="product-image">
+<img src="downloads/27.jpg" class="product-image">
+<img src="downloads/28.jpg" class="product-image">
+<img src="downloads/29.jpg" class="product-image">
+<img src="downloads/30.jpg" class="product-image">
+<img src="downloads/31.jpg" class="product-image">
+<img src="downloads/32.jpg" class="product-image">
+<img src="downloads/33.jpg" class="product-image">
+<img src="downloads/34.jpg" class="product-image">
+<img src="downloads/35.jpg" class="product-image">
+<img src="downloads/36.jpg" class="product-image">
+<img src="downloads/37.jpg" class="product-image">
+<img src="downloads/38.jpg" class="product-image">
+<img src="downloads/39.jpg" class="product-image">
+<img src="downloads/40.jpg" class="product-image">
+<img src="downloads/41.jpg" class="product-image">
+<img src="downloads/42.jpg" class="product-image">
+<img src="downloads/43.jpg" class="product-image">
+<img src="downloads/44.jpg" class="product-image">
+<img src="downloads/45.jpg" class="product-image">
+<img src="downloads/46.jpg" class="product-image">
+<img src="downloads/47.jpg" class="product-image">
+<img src="downloads/48.jpg" class="product-image">
+<img src="downloads/49.jpg" class="product-image">
+<img src="downloads/50.jpg" class="product-image">
+<img src="downloads/51.jpg" class="product-image">
+<img src="downloads/52.jpg" class="product-image">
+<img src="downloads/53.jpg" class="product-image">
+<img src="downloads/54.jpg" class="product-image">
+<img src="downloads/55.jpg" class="product-image">
+<img src="downloads/56.jpg" class="product-image">
+<img src="downloads/57.jpg" class="product-image">
+<img src="downloads/58.jpg" class="product-image">
+<img src="downloads/59.jpg" class="product-image">
+<img src="downloads/60.jpg" class="product-image">
+<img src="downloads/61.jpg" class="product-image">
+<img src="downloads/62.jpg" class="product-image">
+<img src="downloads/63.jpg" class="product-image">
 
-    const searchInput = document.getElementById("searchInput");
-    const suggestions = document.getElementById("suggestions");
-    const clearBtn = document.getElementById("clearBtn");
-    const backToTopBtn = document.getElementById("backToTopBtn");
+<button id="backToTopBtn">↑</button>
 
-    searchInput.addEventListener("input", function () {
-      const input = this.value.toLowerCase().trim();
-      clearBtn.style.display = input ? "block" : "none";
-      suggestions.innerHTML = "";
+<script>
 
-      if (input.length < 2) return;
+const productMap={
+"henna powder":3,
+"triple sifted henna powder":3,
+"bridal henna powder":3,
+"3 filter henna powder":3,
+"5 filter henna powder":3,
+"indigo powder":4,
+"hair henna powder":4,
+"hair henna paste":5,
+"eucalyptus oil":6,
+"nilgiris oil":6,
+"essential oil":6,
+"normal stain oil":6,
+"lavender oil":7,
+"rich babyshower oil":7,
+"tea tree oil":8,
+"rich stain oil":8,
+"bridal blend oil":9,
+"mehendi oil":9,
+"bridal use oil":9,
+"dark stain oil":9,
+"beginners kit":10,
+"practice use kit":10,
+"bridal mehendi kit":11,
+"bridal use kit":11,
+"bridal mehendi cones":12,
+"bridal cones combo":12,
+"nail cones":13,
+"nail liquid":13,
+"sealant spray":14,
+"practice cone":15,
+"aftercare balm":16,
+"henna aftercare roll on":17,
+"beexwax":18,
+"sheabutter":19,
+"olive oil":20,
+"almond oil":21
+};
 
-      const matches = Object.keys(productMap).filter(product =>
-        product.includes(input)
-      );
+const searchInput=document.getElementById("searchInput")
+const suggestions=document.getElementById("suggestions")
+const clearBtn=document.getElementById("clearBtn")
+const backToTopBtn=document.getElementById("backToTopBtn")
 
-      matches.forEach(match => {
-        const li = document.createElement("li");
-        li.textContent = match;
-        li.addEventListener("click", () => {
-          searchInput.value = match;
-          clearBtn.style.display = "block";
-          suggestions.innerHTML = "";
-          scrollToPage(productMap[match]);
-        });
-        suggestions.appendChild(li);
-      });
-    });
+searchInput.addEventListener("input",function(){
 
-    searchInput.addEventListener("keydown", function (e) {
-      if (e.key === "Enter") {
-        const val = this.value.toLowerCase().trim();
-        const match = Object.keys(productMap).find(product =>
-          product.includes(val)
-        );
-        if (match) {
-          suggestions.innerHTML = "";
-          scrollToPage(productMap[match]);
-        }
-      }
-    });
+const input=this.value.toLowerCase().trim()
 
-    clearBtn.addEventListener("click", function () {
-      searchInput.value = "";
-      suggestions.innerHTML = "";
-      clearBtn.style.display = "none";
-      searchInput.focus();
-    });
+clearBtn.style.display=input?"block":"none"
 
-    function scrollToPage(pageNumber) {
-  const img = document.querySelector(`img[src="downloads/${pageNumber}.jpg"]`);
-  if (img) {
-    document.querySelectorAll(".product-image").forEach(i => i.classList.remove("highlight"));
-    img.classList.add("highlight");
+suggestions.innerHTML=""
 
-    const headerOffset = 80; // Adjust if you have a sticky header
-    const elementTop = img.getBoundingClientRect().top + window.pageYOffset;
-    const offset = elementTop - (window.innerHeight / 2) + (img.offsetHeight / 2);
+if(input.length<2)return
 
-    window.scrollTo({
-      top: offset,
-      behavior: "smooth"
-    });
-  }
+const matches=Object.keys(productMap).filter(product=>product.includes(input))
+
+matches.forEach(match=>{
+
+const li=document.createElement("li")
+
+li.textContent=match
+
+li.addEventListener("click",()=>{
+
+searchInput.value=match
+
+suggestions.innerHTML=""
+
+scrollToPage(productMap[match])
+
+})
+
+suggestions.appendChild(li)
+
+})
+
+})
+
+clearBtn.addEventListener("click",function(){
+
+searchInput.value=""
+
+suggestions.innerHTML=""
+
+clearBtn.style.display="none"
+
+searchInput.focus()
+
+})
+
+function scrollToPage(pageNumber){
+
+const img=document.querySelector(`img[src="downloads/${pageNumber}.jpg"]`)
+
+if(img){
+
+document.querySelectorAll(".product-image").forEach(i=>i.classList.remove("highlight"))
+
+img.classList.add("highlight")
+
+img.scrollIntoView({behavior:"smooth",block:"center"})
+
 }
 
+}
 
-    window.addEventListener("scroll", () => {
-      if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
-        backToTopBtn.style.display = "block";
-      } else {
-        backToTopBtn.style.display = "none";
-      }
-    });
+window.addEventListener("scroll",()=>{
 
-    backToTopBtn.addEventListener("click", () => {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    });
-  </script>
+if(document.documentElement.scrollTop>300){
+
+backToTopBtn.style.display="block"
+
+}else{
+
+backToTopBtn.style.display="none"
+
+}
+
+})
+
+backToTopBtn.addEventListener("click",()=>{
+
+window.scrollTo({top:0,behavior:"smooth"})
+
+})
+
+</script>
 
 </body>
 </html>
