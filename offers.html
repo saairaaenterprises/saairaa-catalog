@@ -1,1 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Saairaa Offers</title>
 
+<style>
+
+body{
+font-family:Arial, sans-serif;
+background:#f4f4f4;
+padding:20px;
+text-align:center;
+}
+
+h1{
+margin-bottom:5px;
+}
+
+.offer-image{
+width:100%;
+max-width:600px;
+margin:25px auto;
+display:block;
+border-radius:8px;
+box-shadow:0 2px 6px rgba(0,0,0,0.2);
+}
+
+#backBtn{
+display:inline-block;
+margin-top:15px;
+padding:10px 18px;
+background:#ff9800;
+color:white;
+text-decoration:none;
+border-radius:6px;
+font-weight:bold;
+}
+
+#backBtn:hover{
+background:#e68900;
+}
+
+#backToTopBtn{
+display:none;
+position:fixed;
+bottom:30px;
+right:20px;
+width:50px;
+height:50px;
+font-size:24px;
+background:#ff9800;
+color:white;
+border:none;
+border-radius:50%;
+cursor:pointer;
+box-shadow:0px 2px 6px rgba(0,0,0,0.3);
+}
+
+</style>
+</head>
+
+<body>
+
+<h1>Saairaa Organics®</h1>
+
+<p>
+<strong>Special Sale Offers</strong><br>
+Visit our website:
+<a href="https://www.saairaaorganics.in" target="_blank">
+www.saairaaorganics.in
+</a>
+</p>
+
+<a id="backBtn" href="index.html">← Back to Catalog</a>
+
+
+<!-- OFFER IMAGES -->
+
+<!-- OFFER IMAGES -->
+
+<img src="offers/1.jpg" class="offer-image">
+<img src="offers/2.jpg" class="offer-image">
+<img src="offers/3.jpg" class="offer-image">
+<img src="offers/4.jpg" class="offer-image">
+<img src="offers/5.jpg" class="offer-image">
+<img src="offers/6.jpg" class="offer-image">
+<img src="offers/7.jpg" class="offer-image">
+<img src="offers/8.jpg" class="offer-image">
+<img src="offers/9.jpg" class="offer-image">
+<img src="offers/10.jpg" class="offer-image">
+<img src="offers/11.jpg" class="offer-image">
+<img src="offers/12.jpg" class="offer-image">
+<img src="offers/13.jpg" class="offer-image">
+<img src="offers/14.jpg" class="offer-image">
+<img src="offers/15.jpg" class="offer-image">
+<img src="offers/16.jpg" class="offer-image">
+<img src="offers/17.jpg" class="offer-image">
+<img src="offers/18.jpg" class="offer-image">
+<img src="offers/19.jpg" class="offer-image">
+<img src="offers/20.jpg" class="offer-image">
+<img src="offers/21.jpg" class="offer-image">
+<img src="offers/22.jpg" class="offer-image">
+<img src="offers/23.jpg" class="offer-image">
+<img src="offers/24.jpg" class="offer-image">
+<img src="offers/25.jpg" class="offer-image">
+<img src="offers/26.jpg" class="offer-image">
+<img src="offers/27.jpg" class="offer-image">
+<img src="offers/28.jpg" class="offer-image">
+<img src="offers/29.jpg" class="offer-image">
+<img src="offers/30.jpg" class="offer-image">
+<img src="offers/31.jpg" class="offer-image">
+<img src="offers/32.jpg" class="offer-image">
+<img src="offers/33.jpg" class="offer-image">
+<img src="offers/34.jpg" class="offer-image">
+<img src="offers/35.jpg" class="offer-image">
+<img src="offers/36.jpg" class="offer-image">
+<img src="offers/37.jpg" class="offer-image">
+<img src="offers/38.jpg" class="offer-image">
+<img src="offers/39.jpg" class="offer-image">
+<img src="offers/40.jpg" class="offer-image">
+<img src="offers/41.jpg" class="offer-image">
+<img src="offers/42.jpg" class="offer-image">
+<img src="offers/43.jpg" class="offer-image">
+<img src="offers/44.jpg" class="offer-image">
+
+
+<button id="backToTopBtn">↑</button>
+
+
+<script>
+
+const btn=document.getElementById("backToTopBtn")
+
+window.addEventListener("scroll",()=>{
+if(document.documentElement.scrollTop>300){
+btn.style.display="block"
+}else{
+btn.style.display="none"
+}
+})
+
+btn.onclick=()=>{
+window.scrollTo({top:0,behavior:"smooth"})
+}
+
+</script>
+
+</body>
+</html>
